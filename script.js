@@ -141,7 +141,7 @@ function autoSave() {
  */
 function insertNewNote(event) {
     event.preventDefault();
-    if (noteField.value == '') {
+    if (noteField.value.trim() == '') {
         noteField.focus()
         noteField.reportValidity();
         return
@@ -189,7 +189,7 @@ function deleteNote() {
 function editNote(event) {
     event.preventDefault();
     if (selectedNoteIdForEdit !== null) {
-        if (editNoteField.value == '') {
+        if (editNoteField.value.trim() == '') {
             editNoteField.focus()
             editNoteField.reportValidity();
             return
