@@ -114,11 +114,11 @@ function closeEditor() {
 }
 
 /**
- * Start the auto-save interval for saving the note content every 2 seconds.
+ * Start the auto-save interval for saving the note content every second.
  */
 function startAutoSave() {
     if (!autoSaveInterval) {
-        autoSaveInterval = setInterval(autoSave, 2000);
+        autoSaveInterval = setInterval(autoSave, 1000);
     }
 }
 
@@ -260,12 +260,16 @@ function setupShortcutKeys() {
         if (event.ctrlKey && event.key.toLowerCase() === "s") {
             event.preventDefault();
             if (editor.style.display === 'none') {
-                openErrorModal('Nothing to save...')
+                openToastModal('Nothing to save...')
             } else {
                 autoSave();
-                openErrorModal('Saved Successfully...')
+                openToastModal('Saved Successfully...')
             }
         }
+    });
+
+    document.addEventListener('contextmenu', function (event) {
+        event.preventDefault();
     });
 }
 
@@ -285,7 +289,7 @@ function openInfoModal() {
     infoModal.show();
 }
 
-function openErrorModal(message){
+function openToastModal(message){
     toastModalBody.innerHTML = message
     toastModal.show()
     setTimeout(()=>{
