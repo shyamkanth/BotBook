@@ -21,7 +21,7 @@ A simple browser-based notebook built using HTML, CSS, JavaScript, and Bootstrap
    - Modify the content of the note in the editor.
    
 3. **Saving a Note**  
-   - Notes are automatically saved in real-time as you type. There is no need to manually save them.
+   - Notes are automatically saved in real-time as you type.
 
 4. **Deleting a Note**  
    - Click the delete icon on the note you wish to remove or press `Ctrl + D` when the note is selected.
