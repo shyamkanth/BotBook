@@ -141,6 +141,11 @@ function autoSave() {
  */
 function insertNewNote(event) {
     event.preventDefault();
+    if (noteField.value == '') {
+        noteField.focus()
+        noteField.reportValidity();
+        return
+    }
 
     const name = noteField.value;
     const newId = Math.max(...allNotes.map(note => note.id), -1) + 1;
@@ -184,6 +189,11 @@ function deleteNote() {
 function editNote(event) {
     event.preventDefault();
     if (selectedNoteIdForEdit !== null) {
+        if (editNoteField.value == '') {
+            editNoteField.focus()
+            editNoteField.reportValidity();
+            return
+        }
         const note = allNotes.find(note => note.id === selectedNoteIdForEdit);
         if (note) {
             note.name = editNoteField.value;
