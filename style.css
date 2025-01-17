@@ -179,7 +179,7 @@ html, body{
     .saved{
         display: none;
     }
-    .txtExport{
+    .txtExport, #export_as_text{
         display: none;
     }
     .top-button{
