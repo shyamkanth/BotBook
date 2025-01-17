@@ -4,12 +4,14 @@ A simple browser-based notebook built using HTML, CSS, JavaScript, and Bootstrap
 
 ## Features
 
+- Fully responsive UI for seamless user experience for both mobile and laptop
 - Create multiple notes.
 - Edit notes at any time.
 - Delete notes easily.
 - Save content in real-time.
 - All data is stored in `localStorage` for persistence.
 - Shortcut keys for ease of use.
+- Export as `txt` in laptop and `pdf` in phone in tablet any time you want.
 
 ## How to Use
 
@@ -30,6 +32,7 @@ A simple browser-based notebook built using HTML, CSS, JavaScript, and Bootstrap
 
 - `Ctrl + M`: Create a new note.
 - `Ctrl + S`: Saves the selected note.
+- `Ctrl + I`: See Information.
 - Notes auto-save in real-time as you type.
 
 ## Technologies Used

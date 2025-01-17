@@ -3,7 +3,6 @@ const localStorageKey = "notes";
 
 // DOM elements and modals
 const topbar = document.getElementById('topbar')
-
 const editor = document.getElementById('main');
 const noteField = document.getElementById("note-name");
 const editNoteField = document.getElementById("note-name-edit");
@@ -186,12 +185,11 @@ function insertNewNote(event) {
         return
     }
 
-    const name = noteField.value;
+    const name = noteField.value.trim();
     const newId = Math.max(...allNotes.map(note => note.id), -1) + 1;
 
     allNotes.push({ id: newId, name, content: '' });
     localStorage.setItem(localStorageKey, JSON.stringify(allNotes));
-
     displayNotes(); // Refresh the displayed notes
     openEditor(newId); // Open the newly created note
     createModal.hide(); // Close the create modal
@@ -235,7 +233,7 @@ function editNote(event) {
         }
         const note = allNotes.find(note => note.id === selectedNoteIdForEdit);
         if (note) {
-            note.name = editNoteField.value;
+            note.name = editNoteField.value.trim();
             localStorage.setItem(localStorageKey, JSON.stringify(allNotes));
             displayNotes();
         }
@@ -246,15 +244,52 @@ function editNote(event) {
 }
 
 /**
- * Export the current note's content to a .txt file.
+ * Export the current note's content to a .txt and pdf file.
  */
-function exportToTxt() {
+function exportFile() {
     const note = allNotes.find(note => note.id === currentNoteId);
+    const noteName = note.name.trim().replace(/ /g, '_');
+
     if (note) {
-        const blob = new Blob([content.innerText], { type: 'text/plain' });
+        const contentText = content.innerText.trim();
         const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `${note.name}.txt`;
+        
+        if (window.getComputedStyle(topbar).display == 'none') {
+            const blob = new Blob([contentText], { type: 'text/plain' });
+            link.href = URL.createObjectURL(blob);
+            link.download = `${noteName}.txt`;
+        } else {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const margin = 10;
+            const maxWidth = 180;
+            const pageHeight = doc.internal.pageSize.height;
+            const pageWidth = doc.internal.pageSize.width;
+            const fontSize = 12;
+
+            doc.setFontSize(22);
+            const textWidth = doc.getTextWidth(note.name);
+            const centerX = (pageWidth - textWidth) / 2;
+            doc.text(note.name, centerX, margin + 10);
+
+            doc.setFontSize(fontSize)
+
+            const lines = doc.splitTextToSize(contentText, maxWidth);
+            let yPosition = margin + 20;
+
+            lines.forEach((line, index) => {
+                if (yPosition + 10 > pageHeight) {
+                    doc.addPage();
+                    yPosition = margin + 10;
+                }
+                doc.text(line, margin, yPosition);
+                yPosition += fontSize * 0.6;
+            });
+
+            link.href = URL.createObjectURL(doc.output('blob'));
+            link.download = `${noteName}.pdf`;
+        }
+
         link.click();
     }
 }
@@ -353,7 +388,7 @@ createNoteButton.addEventListener('click', openCreateModal);
 createNoteButtonTop.addEventListener('click', openCreateModal);
 infoButtonTop.addEventListener('click', openInfoModal)
 closeEditorButton.addEventListener('click', closeEditor);
-exportButton.addEventListener('click', exportToTxt);
+exportButton.addEventListener('click', exportFile);
 deleteNoteButton.addEventListener('click', deleteNote);
 content.addEventListener('paste', function(event) {
     event.preventDefault(); 
