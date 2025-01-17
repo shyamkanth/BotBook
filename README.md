@@ -11,7 +11,7 @@ A simple browser-based notebook built using HTML, CSS, JavaScript, and Bootstrap
 - Save content in real-time.
 - All data is stored in `localStorage` for persistence.
 - Shortcut keys for ease of use.
-- Export as `txt` in laptop and `pdf` in phone and tablet any time you want.
+- Export as `txt` and `pdf` in laptop and only `pdf` in phone and tablet any time you want.
 
 ## How to Use
 

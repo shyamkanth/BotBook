@@ -18,7 +18,8 @@ const toastModalBody = document.getElementById('toast-modal-body')
 const contentTitle = document.getElementById('content-title');
 const content = document.getElementById('content');
 const closeEditorButton = document.getElementById('close-editor');
-const exportButton = document.getElementById('export');
+const exportAsTxtButton = document.getElementById('export_as_text');
+const exportAsPdfButton = document.getElementById('export_as_pdf');
 const createModal = new bootstrap.Modal(document.getElementById('myModal'));
 const editModal = new bootstrap.Modal(document.getElementById('myEditModal'));
 const deleteModal = new bootstrap.Modal(document.getElementById('myDeleteModal'));
@@ -244,56 +245,62 @@ function editNote(event) {
 }
 
 /**
- * Export the current note's content to a .txt and pdf file.
+ * Export the current note's content to .txt file.
  */
-function exportFile() {
+function exportAsTxt() {
     const note = allNotes.find(note => note.id === currentNoteId);
-    const noteName = note.name.trim().replace(/ /g, '_');
-
     if (note) {
+        const noteName = note.name.trim().replace(/ /g, '_');
         const contentText = content.innerText.trim();
         const link = document.createElement('a');
-        
-        if (window.getComputedStyle(topbar).display == 'none') {
-            const blob = new Blob([contentText], { type: 'text/plain' });
-            link.href = URL.createObjectURL(blob);
-            link.download = `${noteName}.txt`;
-        } else {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const margin = 10;
-            const maxWidth = 180;
-            const pageHeight = doc.internal.pageSize.height;
-            const pageWidth = doc.internal.pageSize.width;
-            const fontSize = 12;
-
-            doc.setFontSize(22);
-            const textWidth = doc.getTextWidth(note.name);
-            const centerX = (pageWidth - textWidth) / 2;
-            doc.text(note.name, centerX, margin + 10);
-
-            doc.setFontSize(fontSize)
-
-            const lines = doc.splitTextToSize(contentText, maxWidth);
-            let yPosition = margin + 20;
-
-            lines.forEach((line, index) => {
-                if (yPosition + 10 > pageHeight) {
-                    doc.addPage();
-                    yPosition = margin + 10;
-                }
-                doc.text(line, margin, yPosition);
-                yPosition += fontSize * 0.6;
-            });
-
-            link.href = URL.createObjectURL(doc.output('blob'));
-            link.download = `${noteName}.pdf`;
-        }
-
-        link.click();
+        const blob = new Blob([contentText], { type: 'text/plain' });
+        link.href = URL.createObjectURL(blob);
+        link.download = `${noteName}.txt`;
+        link.click();   
     }
 }
 
+/**
+ * Export the current note's content to pdf file.
+ */
+function exportAsPdf() {
+    const note = allNotes.find(note => note.id === currentNoteId);
+    if (note) {
+        const noteName = note.name.trim().replace(/ /g, '_');
+        const contentText = content.innerText.trim();
+        const link = document.createElement('a'); 
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const margin = 10;
+        const maxWidth = 180;
+        const pageHeight = doc.internal.pageSize.height;
+        const pageWidth = doc.internal.pageSize.width;
+        const fontSize = 12;
+
+        doc.setFontSize(22);
+        const textWidth = doc.getTextWidth(note.name);
+        const centerX = (pageWidth - textWidth) / 2;
+        doc.text(note.name, centerX, margin + 10);
+
+        doc.setFontSize(fontSize)
+
+        const lines = doc.splitTextToSize(contentText, maxWidth);
+        let yPosition = margin + 20;
+
+        lines.forEach((line, index) => {
+            if (yPosition + 10 > pageHeight) {
+                doc.addPage();
+                yPosition = margin + 10;
+            }
+            doc.text(line, margin, yPosition);
+            yPosition += fontSize * 0.6;
+        });
+
+        link.href = URL.createObjectURL(doc.output('blob'));
+        link.download = `${noteName}.pdf`;
+        link.click()
+    }
+}
 /**
  * Open the edit modal for a specific note.
  * @param {number} noteId - ID of the note to edit.
@@ -367,12 +374,16 @@ function openCreateModal() {
 }
 
 /**
- * Open the nfo modal to display informations
+ * Open the info modal to display informations
  */
 function openInfoModal() {
     infoModal.show();
 }
 
+
+/**
+ * Open toast with entered message
+ */
 function openToastModal(message){
     toastModalBody.innerHTML = message
     toastModal.show()
@@ -388,7 +399,8 @@ createNoteButton.addEventListener('click', openCreateModal);
 createNoteButtonTop.addEventListener('click', openCreateModal);
 infoButtonTop.addEventListener('click', openInfoModal)
 closeEditorButton.addEventListener('click', closeEditor);
-exportButton.addEventListener('click', exportFile);
+exportAsTxtButton.addEventListener('click', exportAsTxt);
+exportAsPdfButton.addEventListener('click', exportAsPdf);
 deleteNoteButton.addEventListener('click', deleteNote);
 content.addEventListener('paste', function(event) {
     event.preventDefault(); 
