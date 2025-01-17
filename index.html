@@ -14,6 +14,25 @@
 </head>
 
 <body>
+    <div class="dropdown topbar" id="topbar">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            Select Note
+        </button>
+        <ul class="dropdown-menu">
+            <!-- Here Dynamically list will be displayed. On click is handled on the logic -->
+        </ul>
+        <button class="btn btn-success top-button" id="btn-create-top"><span
+                class="material-symbols-outlined">add</span></button>
+
+        <button class="btn btn-primary top-button" id="btn-edit-top"><span
+                class="material-symbols-outlined">edit_note</span></button>
+
+        <button class="btn btn-danger top-button" id="btn-delete-top"><span
+                class="material-symbols-outlined">delete_forever</span></button>
+
+        <button class="btn btn-secondary top-button" id="btn-info-top"><span
+                class="material-symbols-outlined">info</span></button>
+    </div>
     <div class="sidebar">
         <div class="btn-create" id="btn-create" title="Create new note">
             <span>Create new note</span>
@@ -25,14 +44,14 @@
     </div>
     <div class="main" id="main">
         <div class="header">
-            <span class="export" id="close-editor" title="Close editor">Close editor</span>
+            <span class="export" id="close-editor" title="Close editor">Close</span>
             <span class="content-title" id="content-title">Note Title</span>
             <span class="export saved" id="saved" title="Saved Locally">
                 <span>Saved</span>
                 <span class="material-symbols-outlined icon-green">sync_saved_locally</span>
             </span>
             <span class="export" title="Export as txt file" id="export">
-                <span>Export txt</span>
+                <span class="txtExport">Export txt</span>
                 <span class="material-symbols-outlined icon-green">download</span>
             </span>
         </div>
@@ -53,7 +72,7 @@
                 <div class="modal-body">
                     <form id="note-form" onsubmit="insertNewNote(event)">
                         <input type="text" class="form-control" id="note-name" placeholder="Note name..."
-                            name="note-name" autofocus required maxlength="50" />
+                            name="note-name" autofocus required maxlength="50" autocomplete="off" />
                     </form>
                 </div>
 
@@ -157,12 +176,6 @@
                         <a style="text-decoration: none" href="https://github.com/shyamkanth/"
                             target="_blank">GitHub</a>
                     </p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-info" id="modal-close-info" data-bs-dismiss="modal">
-                        Close
-                    </button>
                 </div>
             </div>
         </div>
