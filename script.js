@@ -2,10 +2,16 @@
 const localStorageKey = "notes";
 
 // DOM elements and modals
+const topbar = document.getElementById('topbar')
+
 const editor = document.getElementById('main');
 const noteField = document.getElementById("note-name");
 const editNoteField = document.getElementById("note-name-edit");
 const createNoteButton = document.getElementById('btn-create');
+const createNoteButtonTop = document.getElementById('btn-create-top');
+const infoButtonTop = document.getElementById('btn-info-top');
+const editButtonTop = document.getElementById('btn-edit-top');
+const deleteButtonTop = document.getElementById('btn-delete-top');
 const modalCloseButton = document.getElementById('modal-close');
 const deleteNoteButton = document.getElementById('modal-close-delete');
 const deleteNoteBody = document.getElementById('delete-modal-body')
@@ -55,7 +61,16 @@ function getAllNotes() {
  */
 function displayNotes() {
     const notesContainer = document.querySelector('.notes');
+    const notesDropdown = document.querySelector('.dropdown-menu')
     notesContainer.innerHTML = '';
+    notesDropdown.innerHTML = '';
+
+    if (allNotes.length == 0) {
+        const noteSelectOption = document.createElement('li')
+        noteSelectOption.classList.add('dropdown-item')
+        noteSelectOption.textContent = "No notes created"
+        notesDropdown.appendChild(noteSelectOption)
+    }
 
     allNotes.forEach(note => {
         // Create note element with title and action buttons
@@ -83,6 +98,19 @@ function displayNotes() {
         noteDiv.addEventListener('click', () => openEditor(note.id));
         editSpan.addEventListener('click', () => openEditModal(note.id, note.name));
         deleteSpan.addEventListener('click', () => openDeleteModal(note.id, note.name));
+
+        const noteSelectOption = document.createElement('li')
+        noteSelectOption.classList.add('dropdown-item')
+        noteSelectOption.textContent = note.name
+        noteSelectOption.value = note.id;
+        notesDropdown.appendChild(noteSelectOption)
+
+        noteSelectOption.addEventListener('click', (event) => {
+            if (event.target.classList.contains('dropdown-item')) {
+                const selectedNoteId = event.target.value;
+                openEditor(selectedNoteId);
+            }
+        });
     });
 }
 
@@ -96,7 +124,18 @@ function openEditor(noteId) {
         currentNoteId = noteId;
         editor.style.display = 'flex';
         contentTitle.innerHTML = note.name;
-        content.innerHTML = note.content;
+        content.innerHTML = note.content.trim() == '' ? "Click anywhere to start writing..." : note.content;
+        if (content.innerHTML.trim() == "Click anywhere to start writing...") {
+            content.style.color = '#b4b4b4'
+        } else {
+            content.style.color = 'white'
+        }
+        content.addEventListener('click', () => {
+            if (content.innerHTML.trim() == "Click anywhere to start writing...") {
+                content.innerHTML = ''
+                content.style.color = 'white'
+            }
+        })
         startAutoSave(); // Start auto-save for the opened note
     }
 }
@@ -279,7 +318,7 @@ function setupShortcutKeys() {
     });
 
     document.addEventListener('contextmenu', function (event) {
-        event.preventDefault();
+        // event.preventDefault();
     });
 }
 
@@ -311,6 +350,8 @@ function openToastModal(message){
 
 // Event listeners for buttons
 createNoteButton.addEventListener('click', openCreateModal);
+createNoteButtonTop.addEventListener('click', openCreateModal);
+infoButtonTop.addEventListener('click', openInfoModal)
 closeEditorButton.addEventListener('click', closeEditor);
 exportButton.addEventListener('click', exportToTxt);
 deleteNoteButton.addEventListener('click', deleteNote);
@@ -319,3 +360,23 @@ content.addEventListener('paste', function(event) {
     const pastedText = event.clipboardData.getData('text/plain');
     document.execCommand('insertText', false, pastedText);
 });
+deleteButtonTop.addEventListener('click', () => {
+    if (currentNoteId == null) {
+        openToastModal("No note selected to delete...")
+    } else {
+        selectedNoteIdForDelete = currentNoteId
+        const nodeInfo = allNotes.find(note => note.id === selectedNoteIdForDelete)
+        if (nodeInfo) {
+            openDeleteModal(selectedNoteIdForDelete, nodeInfo.name)   
+        }
+    }
+})
+editButtonTop.addEventListener('click', () => {
+    if (currentNoteId == null) {
+        openToastModal("No note selected to edit...")
+    } else {
+        selectedNoteIdForEdit = currentNoteId
+        const nodeInfo = allNotes.find(note => note.id === selectedNoteIdForEdit)
+        openEditModal(selectedNoteIdForEdit, nodeInfo.name)
+    }
+})

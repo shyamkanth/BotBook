@@ -43,6 +43,11 @@ html, body{
 }
 
 
+.topbar{
+    display: none;
+}
+
+
 /*Sidebar styling*/
 .sidebar {
     width: 20%;
@@ -146,4 +151,39 @@ html, body{
     border: none;
     outline: none;
     font-size: 20px;
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        display: none;
+    }
+    body{
+        flex-direction: column;
+        background: url('./images/bg-phone.png') no-repeat center center;
+        background-size: cover;
+    }
+    .topbar{
+        display: flex;
+        gap: 10px;
+    }
+    .main{
+        width: 100%;
+    }
+    .dropdown-toggle{
+        width: 100%;
+    }
+    .dropdown-menu{
+        width: 100%;
+    }
+    .saved{
+        display: none;
+    }
+    .txtExport{
+        display: none;
+    }
+    .top-button{
+        display: flex !important;
+        align-items: center !important;
+        padding: 10px !important;
+    }
 }
