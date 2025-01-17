@@ -318,7 +318,7 @@ function setupShortcutKeys() {
     });
 
     document.addEventListener('contextmenu', function (event) {
-        // event.preventDefault();
+        event.preventDefault();
     });
 }
 
