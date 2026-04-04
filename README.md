@@ -1,68 +1,86 @@
-# BotBook : A Browser Notebook
+# BotBook : A Minimal Note Companion
 
-A simple browser-based notebook built using HTML, CSS, JavaScript, and Bootstrap that allows users to create, edit, delete, and save multiple notes in real-time. The data is stored locally using `localStorage`, ensuring that your notes persist even after the browser is closed.
+A sleek, browser-based notebook built with HTML, CSS, and JavaScript that lets you create, edit, and manage notes effortlessly. Your notes are stored locally in your browser using `localStorage`, ensuring privacy and persistence across sessions.
 
 ## Features
 
-- Fully responsive UI for seamless user experience for both mobile and laptop
-- Create multiple notes.
-- Edit notes at any time.
-- Delete notes easily.
-- Save content in real-time.
-- All data is stored in `localStorage` for persistence.
-- Shortcut keys for ease of use.
-- Export as `txt` and `pdf` in laptop and only `pdf` in phone and tablet any time you want.
+- **Minimalist Design**: Clean, dark-themed interface with Material Symbols icons
+- **Fully Responsive**: Optimized for desktop, tablet, and mobile devices
+- **Real-time Auto-save**: Notes save automatically as you type
+- **Multiple Notes**: Create and manage unlimited notes
+- **Edit & Rename**: Modify note content and titles anytime
+- **Delete Notes**: Remove notes with confirmation
+- **Export/Import**: Backup and restore notes as JSON files
+- **Keyboard Shortcuts**: Quick actions for power users
+- **Privacy-First**: All data stays local in your browser
 
 ## How to Use
 
-1. **Creating a Note**  
-   - Click on the "Add Note" button or press `Ctrl + M` to create a new note.
-   
-2. **Editing a Note**  
-   - Click on the edit button of note you wish to rename.
-   - Modify the content of the note in the editor.
-   
-3. **Saving a Note**  
-   - Notes are automatically saved in real-time as you type.
+1. **Creating a Note**
+   - Click the "New Note" button or press `Ctrl + M` to create a new note.
+2. **Editing a Note**
+   - Click on any note in the sidebar to open it in the editor.
+   - Modify the content directly in the editor area.
+   - Click the edit icon next to a note title to rename it.
+3. **Saving a Note**
+   - Notes auto-save every second as you type. No manual saving needed.
 
-4. **Deleting a Note**  
-   - Click the delete icon on the note you wish to remove or press `Ctrl + D` when the note is selected.
+4. **Deleting a Note**
+   - Click the delete icon on a note or use the delete button in the editor.
 
-## Shortcut Keys
+5. **Exporting Notes**
+   - Export individual notes or all notes as JSON files.
 
-- `Ctrl + M`: Create a new note.
-- `Ctrl + S`: Saves the selected note.
-- `Ctrl + I`: See Information.
-- Notes auto-save in real-time as you type.
+6. **Importing Notes**
+   - Import previously exported JSON files to restore notes.
+
+## Keyboard Shortcuts
+
+- `Ctrl + M`: Create a new note
+- `Ctrl + E`: Export all notes
+- `Ctrl + I`: Import notes
+- `Ctrl + S`: Manual save (though auto-save is active)
 
 ## Technologies Used
 
-- HTML
-- CSS
-- JavaScript
-- Bootstrap
-- `localStorage`
+- **HTML5**: Semantic markup and structure
+- **CSS3**: Custom styling with CSS variables and responsive design
+- **JavaScript (ES6+)**: Note management, localStorage, and DOM manipulation
+- **Material Symbols**: Google Fonts icons for UI elements
+- **localStorage**: Client-side data persistence
 
-## Declaration
-The developer of this product states that they `do not collect any of your data`. All data stored here remains `entirely local to your browser` unless you choose to clear the data for this website.
+## Privacy & Data
 
-## Live (See in action)
+All your notes are stored exclusively in your browser's localStorage. No data is sent to any server or collected by the developer. Your privacy is fully protected.
 
-You can try the browser notebook by simply opening the [BotBook](https://shyamkanth.github.io/BotBook/) in your browser.
+## Installation & Usage
+
+1. Clone or download this repository
+2. Open `index.html` in any modern web browser
+3. Start creating notes!
+
+## Browser Compatibility
+
+Works in all modern browsers that support:
+
+- ES6 JavaScript features
+- CSS Grid and Flexbox
+- localStorage API
 
 ## Contributing
 
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Open a pull request.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature-branch`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature-branch`)
+5. Open a pull request
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgements
+## Acknowledgments
 
-- Bootstrap for styling.
-- JavaScript for handling note operations and local storage.
+- Material Symbols by Google Fonts
+- Plus Jakarta Sans and JetBrains Mono fonts
+- Inspired by minimal productivity tools
